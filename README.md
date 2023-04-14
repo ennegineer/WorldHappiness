@@ -5,11 +5,10 @@ Examining two datasets from Kaggle to look for trends between happiness and inte
 ## Datasets
 
 Sourced from Kaggle.com:  
-[World Happiness Report 2005-Present](https://www.kaggle.com/datasets/usamabuttar/world-happiness-report-2005-present)
-- The WHR is a publication of the Sustainable Development Solutions Network.
 
-[Global Internet users](https://www.kaggle.com/datasets/ashishraut64/internet-users)
-- Internet Users by Country 1980-2020
+[World Happiness Report 2005-Present](https://www.kaggle.com/datasets/usamabuttar/world-happiness-report-2005-present) -- The WHR is a publication of the Sustainable Development Solutions Network.
+
+[Global Internet users](https://www.kaggle.com/datasets/ashishraut64/internet-users) -- Internet Users by Country 1980-2020
 
 
 
