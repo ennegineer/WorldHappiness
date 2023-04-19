@@ -8,6 +8,7 @@ export default {
         'serif': ['Playfair', 'serif']
       },
       colors: {
+        blue: '#00CCC9',
         coral: '#ff5e5b',
         gray: '#F3F5F7',
         // Coral Accent
