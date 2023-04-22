@@ -1,1 +1,7 @@
 .ipynb_checkpoints/
+__pycache__
+
+app/venv37
+
+app/.chalice/deployments/
+app/.chalice/deployed/
