@@ -1,2 +1,8 @@
 .ipynb_checkpoints/
 .DS_Store
+__pycache__
+
+app/venv37
+
+app/.chalice/deployments/
+app/.chalice/deployed/
