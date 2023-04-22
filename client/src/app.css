@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.inter-font {
+	font-family: 'Inter', sans-serif;
+}
+
+@font-face {
+	font-family: 'Inter';
+	src: url('/Inter-Regular.ttf');
+}
+
+@font-face {
+	font-family: 'Playfair';
+	src: url('/PlayfairDisplay-Medium.ttf');
+}
+
+.accent-link {
+	@apply text-coral underline;
+}
+
+* {
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
