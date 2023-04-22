@@ -20,7 +20,7 @@
 </script>
 
 <div
-	class="flex text-lg md:text-2xl p-4 md:h-screen md:items-center md:justify-center flex-col justify-around text-dark-gray"
+	class="flex text-lg md:text-2xl p-4 md:items-center md:justify-center flex-col justify-around text-dark-gray"
 >
 	<div class="md:w-4/5 lg:w-1/2 text-center space-y-4 md:space-y-8">
 		<h1
