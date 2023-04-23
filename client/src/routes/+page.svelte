@@ -26,13 +26,15 @@
 		<h1
 			class="font-serif text-6xl md:text-[4rem] md:leading-[4rem] lg:text-[5rem] lg:leading-[5rem]"
 		>
-			Is the world's happiness<br />declining?
+			Is the world's happiness declining?
 		</h1>
 		<h2>
 			Explore the relationship between internet usage and self-reported happiness levels on a global
 			scale.
 		</h2>
-		<div bind:this={plotDiv}><!-- Plotly chart will be drawn inside this DIV --></div>
+		<div class="mx-auto" bind:this={plotDiv}>
+			<!-- Plotly chart will be drawn inside this DIV -->
+		</div>
 		<RouteButtons buttonsToInclude={['about', 'explore', 'meet']} />
 	</div>
 </div>

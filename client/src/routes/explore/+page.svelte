@@ -1,6 +1,8 @@
 <script lang="ts">
 	import Navigation from '../navigation.svelte';
 	import RouteButtons from '../routeButtons.svelte';
+
+	let checkbox = false;
 </script>
 
 <Navigation />
