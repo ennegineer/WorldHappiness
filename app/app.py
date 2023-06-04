@@ -8,9 +8,9 @@ from chalicelib import db
 app = Chalice(app_name='chaliceapp')
 app.debug = True
 _DB = None
-_USER_DB = None
-_AUTH_KEY = None
-_SSM_AUTH_KEY_NAME = '/todo-sample-app/auth-key'
+# _USER_DB = None
+# _AUTH_KEY = None
+# _SSM_AUTH_KEY_NAME = '/todo-sample-app/auth-key'
 
 
 # @app.route('/login', methods=['POST'])
@@ -40,6 +40,15 @@ def get_app_db():
         )
     return _DB
 
+@app.route('/test/{column}/{value}', methods=['GET'])
+def test(column, value):
+    return get_app_db().test(column,value)
+
+# This works same as the above
+@app.route('/happiness/{country}', methods=['GET'])
+# return all data available per country
+def all_data_per_country(country):
+    return get_app_db().list_items_for_country(country)
 
 @app.route('/', methods=['GET'])
 def all_items():
@@ -48,19 +57,24 @@ def all_items():
 @app.route('/happiness', methods=['GET'])
 # list the countries and years available to query
 def list_countries():
-    return get_app_db().list_items()
+    return get_app_db().list_items_for_country()
+
+@app.route('/happiness/country', methods=['GET'])
+# return all countries in the dataset for dropdown menu options
+# need to filter this to only show unique country names
+def list_of_all_countries():
+    return get_app_db().list_countries()
 
 
-@app.route('/happiness/{country}', methods=['GET'])
-# return all data available per country
-def all_data_per_country(country):
-    return get_app_db().list_items(country)
 
 @app.route('/happiness/{country}/{year}', methods=['GET'])
 # return the data for a specific country and year combination
 def country_by_year(country, year):
     return get_app_db().get_item(country, year)
 
+@app.route('/happiness/country/{year}', methods=['GET'])
+def list_of_years():
+    pass
 
 
 
