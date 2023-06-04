@@ -48,7 +48,7 @@ DEFAULT_USERNAME = 'default'
 #         if metadata is not None:
 #             item['metadata'] = metadata
 
-class DynamoDB():
+class WorldHappinessDB():
     def __init__(self, table_resource):
         self._table = table_resource
 
@@ -122,3 +122,20 @@ class DynamoDB():
     #     if metadata is not None:
     #         item['metadata'] = metadata
     #     self._table.put_item(Item=item)
+
+class AppDataDB():
+    def __init__(self, table_resource):
+        self._table = table_resource
+
+    def get_countries_list(self):
+        # get a list of unique countries
+        try:
+            response = self._table.get_item(
+                Key={
+                    'pKey': 'country',
+                    'rKey': 'list',
+                },
+            )
+            return response['Item']['countries']
+        except:
+            return 'ya dun did it'

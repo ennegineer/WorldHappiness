@@ -31,50 +31,62 @@ _DB = None
 #     return _USER_DB
 
 
-def get_app_db():
+def get_worldHappiness():
     global _DB
     if _DB is None:
-        _DB = db.DynamoDB(
+        _DB = db.WorldHappinessDB(
             boto3.resource('dynamodb').Table(
                 os.environ['worldhappiness'])
         )
     return _DB
 
+def get_appData():
+    global _DB
+    if _DB is None:
+        _DB = db.AppDataDB(
+            boto3.resource('dynamodb').Table(
+                os.environ['appdata'])
+        )
+    return _DB
+
 @app.route('/test/{column}/{value}', methods=['GET'])
 def test(column, value):
-    return get_app_db().test(column,value)
+    return get_worldHappiness().test(column,value)
 
 # This works same as the above
 @app.route('/happiness/{country}', methods=['GET'])
 # return all data available per country
 def all_data_per_country(country):
-    return get_app_db().list_items_for_country(country)
+    return get_worldHappiness().list_items_for_country(country)
 
 @app.route('/', methods=['GET'])
 def all_items():
-    return get_app_db().list_all_items()
+    return get_worldHappiness().list_all_items()
 
 @app.route('/happiness', methods=['GET'])
 # list the countries and years available to query
 def list_countries():
-    return get_app_db().list_items_for_country()
+    return get_worldHappiness().list_items_for_country()
 
 @app.route('/happiness/country', methods=['GET'])
 # return all countries in the dataset for dropdown menu options
 # need to filter this to only show unique country names
 def list_of_all_countries():
-    return get_app_db().list_countries()
+    return get_worldHappiness().list_countries()
 
 
 
 @app.route('/happiness/{country}/{year}', methods=['GET'])
 # return the data for a specific country and year combination
 def country_by_year(country, year):
-    return get_app_db().get_item(country, year)
+    return get_worldHappiness().get_item(country, year)
 
-@app.route('/happiness/country/{year}', methods=['GET'])
-def list_of_years():
-    pass
+
+# Routes for app data
+
+@app.route('/data/countries', methods=['GET'])
+def list_of_countries():
+    return get_appData().get_countries_list()
 
 
 
