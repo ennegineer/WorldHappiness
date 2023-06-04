@@ -7,6 +7,7 @@
 		{
 			x: ['giraffes', 'orangutans', 'monkeys'],
 			y: [20, 14, 23],
+			marker: {color: '#00CCC9'},
 			type: 'bar'
 		}
 	];
