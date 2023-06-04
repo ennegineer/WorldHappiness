@@ -29,15 +29,14 @@ Additional information on the data is listed at the bottom of this readme, under
 
 ### Website
 #### Frontend
-- Svelte frontend framework
+- SvelteKit
 - TailwindCSS
 - Vite
 #### Backend
-- Google Firestore
-- Google Cloud Functions
-- Google Storage
+- AWS Dynamo
+- AWS Lambda
 #### Deployment
-- Google hosting
+- AWS Chalice
 
 ## Definitions and Assumptions 
 
