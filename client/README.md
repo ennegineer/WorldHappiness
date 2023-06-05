@@ -1,38 +1,16 @@
-# create-svelte
-
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
-
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
+# Client
+## Initial Setup
+`npm install` to get all packages.  
+`npm run dev` to get the app up and running locally.
+## Environment
+Create a .env file at the root of the client directory.  
+Fill in the .env with the information for your setup. These are just sample data points.
 ```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+# Base path to api hosted on AWS.
+BASE_URL="https://abc123.execute-api.us-west-1.amazonaws.com/api/"
 ```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+## Structure
+`src` is where all of the svelte and server code will live.  
+`src/lib` is where our business logic of interacting with our API is written. Inside here, we will have server code that won't expose sensitive data to the client.  
+SvelteKit comes with SSR (server side rendering) so we can do data fetching behind the scenes before we send the HTML to the client computer.  
+`src/routes` is where SvelteKit stores all the pages of our app. Each folder is a part of the URL (file based routing).
