@@ -65,31 +65,24 @@ class WorldHappinessDB():
         country_list.sort()
         return country_list
 
-    def test(self, column, value):
+    def list_column_data(self, country, column):
         response = self._table.query(
-            KeyConditionExpression=Key(column).eq(value)
+            KeyConditionExpression=Key('country').eq(country)
         )
-        return response['Items']
-
+        records = [(record['year'], record[column]) for record in response['Items']]
+        return records
+    
+    # def test(self, column, value):
+    #     response = self._table.query(
+    #         KeyConditionExpression=Key(column).eq(value)
+    #     )
+    #     return response['Items']
 
     def list_items_for_country(self, country):
         response = self._table.query(
             KeyConditionExpression=Key('country').eq(country)
         )
         return response['Items']
-    
-    # def add_item(self, description, metadata=None, username=DEFAULT_USERNAME):
-    #     uid = str(uuid4())
-    #     self._table.put_item(
-    #         Item={
-    #             'username': username,
-    #             'uid': uid,
-    #             'description': description,
-    #             'state': 'unstarted',
-    #             'metadata': metadata if metadata is not None else {},
-    #         }
-    #     )
-    #     return uid
 
     def get_item(self, country, year):
         try:
@@ -103,25 +96,6 @@ class WorldHappinessDB():
         except:
             return 'The country or year you searched for could not be found. Note: the data spans years 2005 to 2022.'
 
-    # def delete_item(self, uid, username=DEFAULT_USERNAME):
-    #     self._table.delete_item(
-    #         Key={
-    #             'username': username,
-    #             'uid': uid,
-    #         }
-    #     )
-
-    # def update_item(self, uid, description=None, state=None,
-    #                 metadata=None, username=DEFAULT_USERNAME):
-    #     # We could also use update_item() with an UpdateExpression.
-    #     item = self.get_item(uid, username)
-    #     if description is not None:
-    #         item['description'] = description
-    #     if state is not None:
-    #         item['state'] = state
-    #     if metadata is not None:
-    #         item['metadata'] = metadata
-    #     self._table.put_item(Item=item)
 
 class AppDataDB():
     def __init__(self, table_resource):
@@ -138,4 +112,4 @@ class AppDataDB():
             )
             return response['Item']['countries']
         except:
-            return 'ya dun did it'
+            return 'You broke something. Try again.'
