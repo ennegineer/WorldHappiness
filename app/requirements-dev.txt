@@ -1,2 +1,2 @@
-chalice==1.15.1
+chalice==1.29.0
 pytest==5.4.3

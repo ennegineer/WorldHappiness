@@ -16,7 +16,9 @@ The database has two tables: one for world happiness data and another for aggreg
 
 `/data/countries`: returns a list of all countries from the world happiness dataset  
 `/happiness/{country}`: returns all data for specified country  
-`/happiness/{country}/{year}`: all data for specified country and year
+`/happiness/{country}/{year}`: returns all data for specified country and year  
+`/happiness/country/column`: returns all years data for the specified country and column.  
+> Example of query parameters: `happiness/country/column?country=Georgia&column=life_ladder`
 
 ## Error handling  
 

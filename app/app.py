@@ -28,17 +28,19 @@ def get_appData():
 
 # BEGIN API ROUTES
 
-# Returns all values for a specified country and column
-@app.route('/happiness/{country}/{column}', methods=['GET'])
-def list_column_data(country, column):
-    return get_worldHappiness().list_column_data(country, column)
-
-
 # Returns all data for the specified country
 @app.route('/happiness/{country}', methods=['GET'])
 # return all data available per country
 def all_data_per_country(country):
     return get_worldHappiness().list_items_for_country(country)
+
+# Returns all values for a specified country and column
+@app.route('/happiness/country/column', methods=['GET'])
+def list_column_data():
+    country = app.current_request.query_params.get('country')
+    column = app.current_request.query_params.get('column')
+    print(country, column)
+    return get_worldHappiness().list_column_data(country, column)
 
 # this pulls all data from worldHappiness table. route is not specific enough.
 @app.route('/', methods=['GET'])
