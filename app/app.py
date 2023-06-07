@@ -28,10 +28,39 @@ def get_appData():
 
 # BEGIN API ROUTES
 
+@app.route('/', methods=['GET'])
+def home():
+    return """API list:
+    
+    /data/countries:
+          returns a list of all countries from the world happiness dataset 
+    /happiness/country?country=<countryname>:
+          returns all data for specified country 
+    /happiness/country/year?country=<countryname>&year=<year>:
+          returns all data for specified country and year 
+    /happiness/country/column?country=<countryname>&column=<columnname>:
+          returns all years data for the specified country and column
+    
+    Where column names are needed for the happiness data APIs, the available columns are:  
+     - country  
+     - confidence_in_national_government  
+     - log_gdp_per_capita  
+     - healthy_life_expectancy_at_birth  
+     - positive_affect  
+     - life_ladder  
+     - generosity  
+     - freedom_to_make_life_choices  
+     - regional_indicator  
+     - perceptions_of_corruption  
+     - negative_affect  
+     - year  
+     - social_support """
+
 # Returns all data for the specified country
-@app.route('/happiness/{country}', methods=['GET'])
+@app.route('/happiness/country', methods=['GET'])
 # return all data available per country
-def all_data_per_country(country):
+def all_data_per_country():
+    country = app.current_request.query_params.get('country')
     return get_worldHappiness().list_items_for_country(country)
 
 # Returns all values for a specified country and column
@@ -42,24 +71,18 @@ def list_column_data():
     print(country, column)
     return get_worldHappiness().list_column_data(country, column)
 
-# this pulls all data from worldHappiness table. route is not specific enough.
-@app.route('/', methods=['GET'])
+# Returns all data from worldHappiness table.
+@app.route('/happiness/all', methods=['GET'])
 def all_items():
     return get_worldHappiness().list_all_items()
 
 
-# nope - this is resource heavy. Will soon replace with the data/ route below.
-@app.route('/happiness/country', methods=['GET'])
-# return all countries in the dataset for dropdown menu options
-# need to filter this to only show unique country names
-def list_of_all_countries():
-    return get_worldHappiness().list_countries()
-
-
-# Returns all data for country/year
-@app.route('/happiness/{country}/{year}', methods=['GET'])
+# Returns all data for the specified country/year
+@app.route('/happiness/country/year', methods=['GET'])
 # return the data for a specific country and year combination
-def country_by_year(country, year):
+def country_by_year():
+    country =app.current_request.query_params.get('country')
+    year = app.current_request.query_params.get('year')
     return get_worldHappiness().get_item(country, year)
 
 
