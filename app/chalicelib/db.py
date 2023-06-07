@@ -56,40 +56,35 @@ class WorldHappinessDB():
         response = self._table.scan()
         return response['Items']
 
-    def list_countries(self):
-        # get a list of unique countries from the country column
-        response = self._table.scan()
-        # countries = response['Items']['country']
-        countries = [record['country'] for record in response['Items']]
-        country_list = list(set(countries))
-        country_list.sort()
-        return country_list
 
-    def test(self, column, value):
-        response = self._table.query(
-            KeyConditionExpression=Key(column).eq(value)
-        )
-        return response['Items']
 
+    def list_column_data(self, country, column):
+        errmsg = 'Be sure to enter both a country and a column from the data, exactly matching the data. \n The column names are: \n confidence_in_national_government \n log_gdp_per_capita \n healthy_life_expectancy_at_birth \n positive_affect \n life_ladder \n generosity \n freedom_to_make_life_choices \n regional_indicator \n perceptions_of_corruption \n negative_affect \n year \n social_support'
+        try:
+            response = self._table.query(
+                KeyConditionExpression=Key('country').eq(country)
+            )
+            records = [(record['year'], record[column]) for record in response['Items']]
+            if len(records) == 0:
+                return errmsg
+            else:
+                return records
+        except:
+            return errmsg
+    
 
     def list_items_for_country(self, country):
-        response = self._table.query(
-            KeyConditionExpression=Key('country').eq(country)
-        )
-        return response['Items']
-    
-    # def add_item(self, description, metadata=None, username=DEFAULT_USERNAME):
-    #     uid = str(uuid4())
-    #     self._table.put_item(
-    #         Item={
-    #             'username': username,
-    #             'uid': uid,
-    #             'description': description,
-    #             'state': 'unstarted',
-    #             'metadata': metadata if metadata is not None else {},
-    #         }
-    #     )
-    #     return uid
+        try:
+            response = self._table.query(
+                KeyConditionExpression=Key('country').eq(country)
+            )
+            if len(response['Items']) == 0:
+                return 'No data found. Be sure you are entering a country that exists in the data and check for spelling errors.'
+            else:
+                return response['Items']
+        except:
+            return 'Error: expected URL format: /happiness/country?country=Georgia'
+
 
     def get_item(self, country, year):
         try:
@@ -103,25 +98,6 @@ class WorldHappinessDB():
         except:
             return 'The country or year you searched for could not be found. Note: the data spans years 2005 to 2022.'
 
-    # def delete_item(self, uid, username=DEFAULT_USERNAME):
-    #     self._table.delete_item(
-    #         Key={
-    #             'username': username,
-    #             'uid': uid,
-    #         }
-    #     )
-
-    # def update_item(self, uid, description=None, state=None,
-    #                 metadata=None, username=DEFAULT_USERNAME):
-    #     # We could also use update_item() with an UpdateExpression.
-    #     item = self.get_item(uid, username)
-    #     if description is not None:
-    #         item['description'] = description
-    #     if state is not None:
-    #         item['state'] = state
-    #     if metadata is not None:
-    #         item['metadata'] = metadata
-    #     self._table.put_item(Item=item)
 
 class AppDataDB():
     def __init__(self, table_resource):
@@ -138,4 +114,4 @@ class AppDataDB():
             )
             return response['Item']['countries']
         except:
-            return 'ya dun did it'
+            return 'Error. Try again.'
