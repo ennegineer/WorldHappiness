@@ -10,5 +10,5 @@ async function getData(slug: string) {
 }
 
 export async function getCountryList(): Promise<string[]> {
-  return getData("happiness/country")
+  return await getData("data/countries")
 }
