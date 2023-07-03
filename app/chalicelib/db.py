@@ -115,3 +115,51 @@ class AppDataDB():
             return response['Item']['countries']
         except:
             return 'Error. Try again.'
+        
+class UsersDataDB():
+    def __init__(self, table_resource):
+        self._table = table_resource
+
+    def list_all_items(self):
+        response = self._table.scan()
+        return response['Items']
+
+
+    def list_column_data(self, country, column):
+        errmsg = 'Be sure to enter both a country and a column from the data, exactly matching the data. \n The column names are: \n broadband_sub (The number of fixed broadband subscriptions per 100 people) \n cell_sub (Mobile phone subscriptions per 100 people) \n internet_users_percent (The share of the population that is accessing the internet) \n no_internet_users (Number of people using the Internet) \n'
+        try:
+            response = self._table.query(
+                KeyConditionExpression=Key('country').eq(country)
+            )
+            records = [(record['year'], record[column]) for record in response['Items']]
+            if len(records) == 0:
+                return errmsg
+            else:
+                return records
+        except:
+            return errmsg
+    
+
+    def list_items_for_country(self, country):
+        try:
+            response = self._table.query(
+                KeyConditionExpression=Key('country').eq(country)
+            )
+            if len(response['Items']) == 0:
+                return 'No data found. Be sure you are entering a country that exists in the data and check for spelling errors.'
+            else:
+                return response['Items']
+        except:
+            return 'Error: expected URL format: /users/country?country=Georgia'
+    
+    def get_item(self, country, year):
+        try:
+            response = self._table.get_item(
+            Key={
+                'country': country,
+                'year': int(year),
+            },
+            )
+            return response['Item']
+        except:
+            return 'The country or year you searched for could not be found. Note: the data spans years 2005 to 2022.'

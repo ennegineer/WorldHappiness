@@ -12,14 +12,16 @@ Move into the app directory, then
 
 ## Available APIs  
 
-The database has two tables: one for world happiness data and another for aggregated data. The APIs available are listed below.  
+The database has three tables: one for world happiness data, one for internet users data, and another for aggregated data. The APIs available are listed below.  
 
 `/`: returns the below list of APIs and available columns  
 `/data/countries`: returns a list of all countries from the world happiness dataset  
 `/happiness/country?country=<countryname>`: returns all data for specified country  
 `/happiness/country/year?country=<countryname>&year=<year>`: returns all data for specified country and year  
 `/happiness/country/column?country=<countryname>&column=<columnname>`: returns all years data for the specified country and column  
-> Example of query parameters: `happiness/country/column?country=Georgia&column=life_ladder`
+`/users/country/year?country=<countryname>&year=<year>`: returns all internet usage data for specified country and year  
+`/users/country/column?country=<countryname>&column=<columnname>`: returns internet usage values for all years for the specified country and column  
+> Example of query parameters: `happiness/country/column?country=Georgia&column=life_ladder`  
 
 Where column names are needed for the happiness data APIs, the available columns are:  
     country  

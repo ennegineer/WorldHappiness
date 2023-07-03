@@ -6,7 +6,8 @@
       "api_gateway_stage": "api",
       "environment_variables": {
         "worldhappiness": "worldhappiness-app-6120889f-b467-45a9-bafe-7a58d424cafc",
-        "appdata": "worldhappiness-appdata"
+        "appdata": "worldhappiness-appdata",
+        "usersdata": "worldhappiness-usersdata"
       }
     }
   }
