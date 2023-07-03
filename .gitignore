@@ -6,3 +6,4 @@ app/venv37
 
 app/.chalice/deployments/
 app/.chalice/deployed/
+app/data/json/import_files/

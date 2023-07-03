@@ -7,6 +7,7 @@ app = Chalice(app_name='chaliceapp')
 app.debug = True
 _WorldHappinessDB = None
 _AppDataDB = None
+_UsersDataDB = None
 
 def get_worldHappiness():
     global _WorldHappinessDB
@@ -26,6 +27,15 @@ def get_appData():
         )
     return _AppDataDB
 
+def get_usersData():
+    global _UsersDataDB
+    if _UsersDataDB is None:
+        _UsersDataDB = db.UsersDataDB(
+            boto3.resource('dynamodb').Table(
+                os.environ['usersdata'])
+        )
+    return _UsersDataDB
+
 # BEGIN API ROUTES
 
 @app.route('/', methods=['GET'])
@@ -40,6 +50,10 @@ def home():
           returns all data for specified country and year 
     /happiness/country/column?country=<countryname>&column=<columnname>:
           returns all years data for the specified country and column
+    /users/country/year?country=<countryname>&year=<year>:
+          returns all internet users data for specified country and year
+    /users/country/column?country=<countryname>&column=<columnname>:
+          returns all internet users data for specified country and column
     
     Where column names are needed for the happiness data APIs, the available columns are:  
      - country  
@@ -54,7 +68,15 @@ def home():
      - perceptions_of_corruption  
      - negative_affect  
      - year  
-     - social_support """
+     - social_support 
+     
+    Where column names are needed for the internet users data APIs, the available columns are:  
+     - country  
+     - year  
+     - broadband_sub
+     - cell_sub
+     - internet_users_percent
+     - no_internet_users  """
 
 # Returns all data for the specified country
 @app.route('/happiness/country', methods=['GET'])
@@ -94,3 +116,20 @@ def list_of_countries():
     return get_appData().get_countries_list()
 
 
+# Routes for users data
+
+# Returns all user data for the specified country/year
+@app.route('/users/country/year', methods=['GET'])
+# return the data for a specific country and year combination
+def country_by_year():
+    country =app.current_request.query_params.get('country')
+    year = app.current_request.query_params.get('year')
+    return get_usersData().get_item(country, year)
+
+# Returns all values for a specified country and column
+@app.route('/users/country/column', methods=['GET'])
+def list_column_data():
+    country = app.current_request.query_params.get('country')
+    column = app.current_request.query_params.get('column')
+    print(country, column)
+    return get_usersData().list_column_data(country, column)
