@@ -31,10 +31,10 @@ export function getChartConfiguration (input: ChartInput): ChartConfiguration {
           label: 'Freedom to Make Life Choices',
           data: input.data.map(row => Math.round(row.freedom_to_make_life_choices * 100))
         },
-        {
-          label: 'GDP Per Capita (nat. log)',
-          data: input.data.map(row => Math.round(row.log_gdp_per_capita))
-        },
+        // {
+        //   label: 'GDP Per Capita (nat. log)',
+        //   data: input.data.map(row => Math.round(row.log_gdp_per_capita))
+        // },
         {
           label: 'Positive Affect',
           data: input.data.map(row => Math.round(row.positive_affect * 100))
@@ -58,11 +58,16 @@ export function getChartConfiguration (input: ChartInput): ChartConfiguration {
       ]
     },
     options: {
+      responsive: true,
+      maintainAspectRatio: false,
       plugins: {
         title: {
           display: true,
           text: `Year over Year Happiness Data for ${input.countryName}`, 
           position: 'top'
+        },
+        legend: {
+          position: 'bottom'
         }
       }
     }

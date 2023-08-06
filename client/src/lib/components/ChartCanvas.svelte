@@ -4,6 +4,7 @@
 	import { onMount } from "svelte";
 
   let classNames = ""
+  export let style: string = ""
 
   let chartCanvasElement: any;
   let chart: Chart;
@@ -45,4 +46,8 @@
 </script>
 
 
-<canvas bind:this={chartCanvasElement} class={classNames} />
+<canvas 
+  bind:this={chartCanvasElement} 
+  class={classNames} 
+  style={style}
+  />
