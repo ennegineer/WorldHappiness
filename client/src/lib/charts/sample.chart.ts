@@ -1,8 +1,9 @@
-import type { ChartConfiguration } from "chart.js";
+import type { ChartConfiguration } from "chart.js/auto";
 
 type ChartInput = {
-
-}
+  name: string
+  value: number
+}[]
 
 export function getSampleChart (input: ChartInput): ChartConfiguration {
   return {
@@ -10,8 +11,8 @@ export function getSampleChart (input: ChartInput): ChartConfiguration {
     data: {
         datasets: [
           {
-            label: 'Some Label',
-            data: [ 1, 2, 3 ]
+            label: 'Value Label',
+            data: input.map(row => row.value)
           }
         ]
       }

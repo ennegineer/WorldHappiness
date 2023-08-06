@@ -3,7 +3,7 @@
   import Navigation from '../navigation.svelte';
   import RouteButtons from '../routeButtons.svelte';
 	import ChartCanvas from '$lib/components/ChartCanvas.svelte';
-	import { getChartConfiguration as YoYChartConfig } from './charts/yearOverYearHappinessData.chart';
+	import { getChartConfiguration as YoYChartConfig } from '$lib/charts/yearOverYearHappinessData.chart';
 	import { onMount } from 'svelte';
 
   export let data: PageData;
@@ -48,23 +48,23 @@
 </script>
 
 <Navigation />
-<div class="p-4 space-y-8">
-
-
-  <div>
-    <h1>Explore the Data</h1>
-  
-    <select bind:value={selectedCountry} on:change={() => getCountryData(selectedCountry)} class="p-2 m-2 border-2 border-coral rounded-md">
-      {#each countryList as country}
-        <option value={country}>
-          {country}
-        </option>
-      {/each}
-    </select>
-  </div>
-  
-  <div class="flex justify-center">
-    <ChartCanvas bind:this={YoYChart} class="max-w-7xl"></ChartCanvas>
+<div class="p-4 space-y-8 ">
+  <div class="lg:flex lg:space-x-2">
+    <div class="flex-none">
+      <h1>Explore the Data</h1>
+    
+      <select bind:value={selectedCountry} on:change={() => getCountryData(selectedCountry)} class="p-2 m-2 border-2 border-coral rounded-md">
+        {#each countryList as country}
+          <option value={country}>
+            {country}
+          </option>
+        {/each}
+      </select>
+    </div>
+    
+    <div class="h-[400px] lg:h-[600px]">
+      <ChartCanvas bind:this={YoYChart} class="h-full w-full"></ChartCanvas>
+    </div>
   </div>
 
   <RouteButtons buttonsToInclude={['about', 'meet']} />
