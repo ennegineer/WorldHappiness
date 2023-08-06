@@ -15,6 +15,7 @@
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/adapter-netlify": "^1.0.0-next.88",
 		"@sveltejs/kit": "^1.5.0",
+		"@types/chart.js": "^2.9.37",
 		"@types/plotly.js-dist-min": "^2.3.1",
 		"autoprefixer": "^10.4.14",
 		"postcss": "^8.4.21",
@@ -29,6 +30,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"chart.js": "^4.3.3",
 		"plotly.js-dist-min": "^2.21.0"
 	}
 }
