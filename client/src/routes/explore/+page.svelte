@@ -4,15 +4,22 @@
   import RouteButtons from '../routeButtons.svelte';
 	import ChartCanvas from '$lib/components/ChartCanvas.svelte';
 	import { getChartConfiguration as YoYChartConfig } from './charts/yearOverYearHappinessData.chart';
+	import { onMount } from 'svelte';
 
   export let data: PageData;
-  const { countryList, USCountryData } = data;
+  const { countryList } = data;
   let selectedCountry: string = countryList[0]
 
   let YoYChart: ChartCanvas
-  
-  USCountryData.usCountryData.then(uSCountryDataResult => {
-    const YoYchartData = uSCountryDataResult.map((record: any) => {
+
+  async function getCountryData (country: string): Promise<any> {
+    console.log('Getting Country Data for ', country);
+    let res = await fetch('/explore?' + new URLSearchParams({
+      country: country
+    }))
+    let { countryData } = await res.json() 
+
+    let parsedCountryData = countryData.map((record: any) => {
       return {
         year: record.year,
         confidence_in_national_government: record.confidence_in_national_government,
@@ -27,23 +34,38 @@
         social_support: record.social_support
       }
     })
-    YoYChart?.updateChart(YoYChartConfig(YoYchartData))
+
+    YoYChart.updateChart(YoYChartConfig({
+      countryName: country,
+      data: parsedCountryData
+    }))
+  }
+
+  onMount(() => {
+    getCountryData(selectedCountry)
   })
+
 </script>
 
 <Navigation />
-<div class="p-4">
-  <h1>Explore the Data</h1>
+<div class="p-4 space-y-8">
 
-  <select bind:value={selectedCountry} class="p-2 m-2 border-2 border-coral rounded-md">
-    {#each countryList as country}
-      <option value={country}>
-        {country}
-      </option>
-    {/each}
-  </select>
+
+  <div>
+    <h1>Explore the Data</h1>
   
-  <ChartCanvas bind:this={YoYChart}></ChartCanvas>
+    <select bind:value={selectedCountry} on:change={() => getCountryData(selectedCountry)} class="p-2 m-2 border-2 border-coral rounded-md">
+      {#each countryList as country}
+        <option value={country}>
+          {country}
+        </option>
+      {/each}
+    </select>
+  </div>
+  
+  <div class="flex justify-center">
+    <ChartCanvas bind:this={YoYChart} class="max-w-7xl"></ChartCanvas>
+  </div>
 
   <RouteButtons buttonsToInclude={['about', 'meet']} />
 </div>

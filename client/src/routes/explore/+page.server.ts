@@ -3,9 +3,6 @@ import { getCountryList, getUSCountryData } from "$lib/server/aws_client";
 
 export const load = (async ({ fetch, params }) => {
     return {
-        countryList: getCountryList(),
-        USCountryData: {
-            usCountryData : getUSCountryData()
-        }
+        countryList: getCountryList()
     };
 }) satisfies PageServerLoad;

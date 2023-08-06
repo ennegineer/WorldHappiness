@@ -3,8 +3,15 @@
 	import { Chart } from "chart.js/auto";
 	import { onMount } from "svelte";
 
+  let classNames = ""
+
   let chartCanvasElement: any;
   let chart: Chart;
+
+  /** 
+   * Optional chart configuration to show the chart on mount.  
+   * If data is not available on mount, update the chart with {@link updateChart} when data is available.
+  */
   export let chartConfig: ChartConfiguration | undefined = undefined
 
   onMount(() => {
@@ -26,14 +33,16 @@
       initChart(chartConfig);
     }
     
-    chart.data = {
-      ...chart.data,
-      ...chartConfig
-    }
+    chart.data = chartConfig.data
+    chart.config.options = chartConfig.options
+    // chart.options.plugins = chartConfig.plugins
+    // How can we update the type from the config?
+
     chart.update()
   }
 
+  export { classNames as class }
 </script>
 
 
-<canvas bind:this={chartCanvasElement} />
+<canvas bind:this={chartCanvasElement} class={classNames} />
