@@ -19,6 +19,11 @@ export async function getCountryList(): Promise<string[]> {
 
 export async function getUSCountryData(): Promise<any>{
   let USCountryData = await getData('happiness/country?country=United States')
-  console.log('🪵 ~ getUSCountryData ~ USCountryData:', USCountryData);
+  // console.log('🪵 ~ getUSCountryData ~ USCountryData:', USCountryData);
   return USCountryData
+}
+
+export async function getCountryData (country: string) {
+  let countryData = await getData(`happiness/country?country=${country}`)
+  return countryData
 }
