@@ -1,7 +1,7 @@
 import type { PageServerLoad } from './$types';
 import { getUSCountryData } from "$lib/server/aws_client";
 
-export const load = (({ params }) => {
+export const load = (() => {
     return {
         USCountryData: getUSCountryData()
     };
