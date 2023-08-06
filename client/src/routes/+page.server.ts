@@ -1,8 +1,10 @@
 import type { PageServerLoad } from './$types';
-import { getUSCountryData } from "$lib/server/aws_client";
+import { getInternetNumUsers, getUSCountryData } from "$lib/server/aws_client";
+
 
 export const load = (() => {
     return {
-        USCountryData: getUSCountryData()
+        USCountryData: getUSCountryData(),
+        USNumInternetUsers: getInternetNumUsers("United States")
     };
 }) satisfies PageServerLoad;

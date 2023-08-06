@@ -13,3 +13,7 @@ export type HappinessRecord = {
   year: number
   social_support: number
 }
+
+export type InternetRecord = {
+
+}

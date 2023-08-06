@@ -6,15 +6,23 @@
 	import { onMount } from 'svelte';
 
 	export let data: PageData;
-	const { USCountryData } = data;
 	let chart: ChartCanvas;
 
-	const chartData: ChartInput = USCountryData.map((record) => {
-		return {
-			year: record.year,
-			life_ladder: record.life_ladder
-		}
-	})
+	const chartData: ChartInput = {
+		happinessData: data.USCountryData.map((record) => {
+			return {
+				year: record.year,
+				life_ladder: record.life_ladder
+			}
+		}),
+		internetData: data.USNumInternetUsers.map((record: any[]) => {
+			const [year, no_internet_users] = record
+			return {
+				year,
+				no_internet_users
+			}
+		})
+	}
 
 	onMount(() => {
 		chart.updateChart(USAggregatedHappinessConfiguration(chartData))

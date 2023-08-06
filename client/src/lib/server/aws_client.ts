@@ -29,3 +29,8 @@ export async function getCountryData (country: string) {
   let countryData = await getData<HappinessRecord[]>(`happiness/country?country=${country}`)
   return countryData
 }
+
+export async function getInternetNumUsers (country: string) {
+  let numUsersData = await getData<any>(`users/country/column?country=${country}&column=no_internet_users`)
+  return numUsersData
+}
