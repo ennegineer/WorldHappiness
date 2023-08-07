@@ -2,7 +2,7 @@
 	import RouteButtons from './routeButtons.svelte';
 	import type { PageData } from './$types';
 	import ChartCanvas from '$lib/components/ChartCanvas.svelte';
-	import { getChartConfiguration as USAggregatedHappinessConfiguration, type ChartInput } from '$lib/charts/USAggregatedHappiness.chart'
+	import { getChartConfiguration as USAggregatedHappinessConfiguration, type ChartInput } from '$lib/charts/USAggregatedHappinessVsInternetUsers.chart'
 	import { onMount } from 'svelte';
 
 	export let data: PageData;
@@ -44,7 +44,9 @@
 			Explore the relationship between internet usage and self-reported happiness levels on a global
 			scale.
 		</h2>
-		<ChartCanvas bind:this={chart} class="h-full w-full"></ChartCanvas>
+		<div class="h-[300px] md:h-[450px]">
+			<ChartCanvas bind:this={chart} class="h-full w-full"></ChartCanvas>
+		</div>
 		<RouteButtons buttonsToInclude={['about', 'explore', 'meet']} />
 	</div>
 </div>
