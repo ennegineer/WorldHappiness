@@ -1,6 +1,7 @@
 import { BASE_URL } from '$env/static/private';
+import type { HappinessRecord } from '$lib/types/happinessDataTypes';
 
-async function getData(slug: string) {
+async function getData<DType>(slug: string): Promise<DType> {
   try {
     let URL = encodeURI(BASE_URL + slug)
     let response = await fetch(URL)
@@ -17,13 +18,19 @@ export async function getCountryList(): Promise<string[]> {
   return countryData
 }
 
-export async function getUSCountryData(): Promise<any>{
-  let USCountryData = await getData('happiness/country?country=United States')
-  // console.log('🪵 ~ getUSCountryData ~ USCountryData:', USCountryData);
+
+
+export async function getUSCountryData(): Promise<HappinessRecord[]>{
+  let USCountryData = await getData<HappinessRecord[]>('happiness/country?country=United States')
   return USCountryData
 }
 
 export async function getCountryData (country: string) {
-  let countryData = await getData(`happiness/country?country=${country}`)
+  let countryData = await getData<HappinessRecord[]>(`happiness/country?country=${country}`)
   return countryData
+}
+
+export async function getInternetNumUsers (country: string) {
+  let numUsersData = await getData<any>(`users/country/column?country=${country}&column=no_internet_users`)
+  return numUsersData
 }

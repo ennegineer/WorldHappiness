@@ -1,54 +1,34 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import RouteButtons from './routeButtons.svelte';
-	import { Chart } from 'chart.js/auto';
 	import type { PageData } from './$types';
+	import ChartCanvas from '$lib/components/ChartCanvas.svelte';
+	import { getChartConfiguration as USAggregatedHappinessConfiguration, type ChartInput } from '$lib/charts/USAggregatedHappinessVsInternetUsers.chart'
+	import { onMount } from 'svelte';
 
 	export let data: PageData;
-  	const { USCountryData } = data;
-	let chart: any;
+	let chart: ChartCanvas;
 
-	const chartData = USCountryData.map((record: any) => {
-		return {
-		year: record.year,
-		life_ladder: record.life_ladder
-		}
+	const chartData: ChartInput = {
+		happinessData: data.USCountryData.map((record) => {
+			return {
+				year: record.year,
+				life_ladder: record.life_ladder
+			}
+		}),
+		internetData: data.USNumInternetUsers.map((record: any[]) => {
+			const [year, no_internet_users] = record
+			return {
+				year,
+				no_internet_users
+			}
+		})
+	}
+
+	onMount(() => {
+		chart.updateChart(USAggregatedHappinessConfiguration(chartData))
 	})
 
 
-	onMount(()=> {
-    const ctx = chart.getContext('2d');
-    // Initialize chart using default config set
-    new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: chartData.map((row: any) => row.year),
-        datasets: [
-          {
-            label: 'Happiness',
-            data: chartData.map((row: any) => (row.life_ladder * 100).toFixed(2)),
-			borderColor: '#00CCC9'
-          }
-        ]
-	  },
-		options: {
-			plugins: {
-				legend: {
-					display: false
-      			}
-			},
-			scales: {
-				y: {
-					min: 650,
-					max: 750,
-					ticks: {
-						display: false
-					}
-				}
-			}
-		}
-  })
-});
 </script>
 
 <div
@@ -56,7 +36,7 @@
 >
 	<div class="md:w-4/5 lg:w-1/2 text-center space-y-4 md:space-y-8">
 		<h1
-			class="font-serif text-6xl md:text-[4rem] md:leading-[4rem] lg:text-[5rem] lg:leading-[5rem]"
+			class="font-serif text-5xl md:text-[4rem] md:leading-[4rem] lg:text-[5rem] lg:leading-[5rem]"
 		>
 			Is the world's happiness declining?
 		</h1>
@@ -64,9 +44,9 @@
 			Explore the relationship between internet usage and self-reported happiness levels on a global
 			scale.
 		</h2>
-		<canvas bind:this={chart}>
-			<!-- Chart will be drawn inside this DIV -->
-		</canvas>
+		<div class="h-[300px] md:h-[450px]">
+			<ChartCanvas bind:this={chart} class="h-full w-full"></ChartCanvas>
+		</div>
 		<RouteButtons buttonsToInclude={['about', 'explore', 'meet']} />
 	</div>
 </div>
