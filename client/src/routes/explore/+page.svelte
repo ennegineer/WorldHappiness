@@ -5,6 +5,7 @@
 	import ChartCanvas from '$lib/components/ChartCanvas.svelte';
 	import { getChartConfiguration as YoYChartConfig } from '$lib/charts/yearOverYearHappinessData.chart';
 	import { onMount } from 'svelte';
+  import { charts } from '$lib/charts/availableCharts'
 
   export let data: PageData;
   const { countryList } = data;
@@ -61,10 +62,18 @@
         {/each}
       </select>
     </div>
-    
+
     <div class="h-[400px] lg:h-[600px]">
       <ChartCanvas bind:this={YoYChart} class="h-full w-full"></ChartCanvas>
     </div>
+  </div>
+
+  <div class="flex flex-col md:grid md:grid-cols-2 3xl:grid-cols-3 mx-auto md:w-2/3 lg:w-1/2 text-center gap-4" data-sveltekit-preload-data="hover">
+    {#each charts as chart}
+      <a href="explore/{chart.slug}" class="bg-coral h-64 flex justify-center items-center text-white rounded-2xl">
+        <p>{chart.name}</p>
+      </a>
+    {/each}
   </div>
 
   <RouteButtons buttonsToInclude={['about', 'meet']} />

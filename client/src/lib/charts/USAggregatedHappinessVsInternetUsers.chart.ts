@@ -46,7 +46,7 @@ export function getChartConfiguration (input: ChartInput): ChartConfiguration {
       maintainAspectRatio: false,
       interaction: {
         intersect: false,
-        mode: 'nearest',
+        mode: 'index',
       },  
       plugins: {
         tooltip: {
